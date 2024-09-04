@@ -1,5 +1,15 @@
 import User from "../models/User.js";
 
+const getAll = async (req, res) => {
+  try {
+    const users = await User.find();
+    return res.json(users);
+  } catch (error) {
+    console.log(error);
+    return res.status(404).json({ message: "No users found" });
+  }
+};
+
 const createUser = async (req, res) => {
   try {
     const newUser = await User.create({
@@ -17,4 +27,5 @@ const createUser = async (req, res) => {
 
 export default {
   createUser: createUser,
+  getAll: getAll,
 };

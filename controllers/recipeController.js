@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 const getAll = async (req, res) => {
   try {
-    const recipes = await Recipe.find();
+    const recipes = await Recipe.find({ deletedAt: null }).populate("user");
     return res.json(recipes);
   } catch (error) {
     console.log(error);
@@ -31,6 +31,7 @@ const createRecipe = async (req, res) => {
         total: req.body.preparation.total,
       },
       instructions: req.body.instructions,
+      user: req.body.user,
     });
     return res.status(201).json(newRecipe);
   } catch (error) {
